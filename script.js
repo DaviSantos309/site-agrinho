@@ -1,36 +1,98 @@
-// Botão Saiba Mais
-document.getElementById("saibaMais").addEventListener("click", () => {
-    document
-        .getElementById("sobre")
-        .scrollIntoView({ behavior: "smooth" });
+// =========================
+// EFEITO DIGITANDO
+// =========================
+
+const texto =
+"Agro Forte, Futuro Sustentável";
+
+let i = 0;
+
+function escrever() {
+
+    if(i < texto.length){
+
+        document.getElementById("typing").innerHTML += texto.charAt(i);
+
+        i++;
+
+        setTimeout(escrever, 100);
+    }
+}
+
+escrever();
+
+
+// =========================
+// CONTADORES ANIMADOS
+// =========================
+
+const contadores =
+document.querySelectorAll(".contador");
+
+contadores.forEach(contador => {
+
+    function atualizar(){
+
+        const alvo =
+        +contador.getAttribute("data-target");
+
+        const atual =
+        +contador.innerText;
+
+        const incremento =
+        alvo / 100;
+
+        if(atual < alvo){
+
+            contador.innerText =
+            Math.ceil(atual + incremento);
+
+            setTimeout(atualizar, 25);
+        }
+        else{
+
+            contador.innerText = alvo;
+        }
+    }
+
+    atualizar();
+
 });
 
-// Contador animado
-const contador = document.getElementById("contador");
 
-let valor = 0;
-const meta = 50000;
+// =========================
+// QUIZ
+// =========================
 
-const animarContador = () => {
-    const incremento = Math.ceil(meta / 200);
+function respostaCorreta(){
 
-    const intervalo = setInterval(() => {
-        valor += incremento;
+    document.getElementById(
+        "resultadoQuiz"
+    ).innerHTML =
+    "✅ Correto! Essa prática ajuda a preservar recursos naturais.";
+}
 
-        if (valor >= meta) {
-            valor = meta;
-            clearInterval(intervalo);
-        }
+function respostaErrada(){
 
-        contador.textContent = valor.toLocaleString("pt-BR");
-    }, 20);
-};
+    document.getElementById(
+        "resultadoQuiz"
+    ).innerHTML =
+    "❌ Incorreto! O desperdício prejudica a sustentabilidade.";
+}
 
-// Inicia quando a página carregar
-window.addEventListener("load", animarContador);
 
-// Formulário
-document.querySelector("form").addEventListener("submit", (e) => {
+// =========================
+// FORMULÁRIO
+// =========================
+
+document.getElementById("formulario")
+.addEventListener("submit", function(e){
+
     e.preventDefault();
-    alert("Mensagem enviada com sucesso!");
+
+    alert(
+        "Mensagem enviada com sucesso!"
+    );
+
+    this.reset();
 });
